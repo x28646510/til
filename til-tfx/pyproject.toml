@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "til-tfx"
+version = "0.1.0"
+description = "TIL for TFX"
+authors = ["x28646510 <x28646510@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7" 
+tensorflow = "=2.1.0-rc0"
+tfx = "=0.15.0"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.4"
+pytest = "^5.3"
+bandit = "^1.6"
+black = {version = "^18.3-alpha.0", allows-prereleases = true}
+pyre-check = "^0.0.32"
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+    | \.venv
+    | \.pytest_cache
+  )/
+)
+'''
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

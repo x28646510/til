@@ -1,0 +1,8 @@
+{
+  "binary": "/Users/koichirokamoto/dev/til/til-tfx/.venv/bin/pyre.bin",
+  "source_directories": [
+    "til_tfx"
+  ],
+  "typeshed": "/Users/koichirokamoto/dev/til/til-tfx/.venv/lib/pyre_check/typeshed/",
+  "workers": 2
+}
