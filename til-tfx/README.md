@@ -8,5 +8,23 @@
 - `poetry init`
 - `poetry config settings.virtualenvs.in-project true`
 - `poetry add tensorflow==2.1.0-rc0 tfx==0.15.0`
-- `poetry add -D pylint pytest bandit`
 - `poetry add -D black --allow-prereleases`
+- `poetry add -D pylint pytest bandit isort autoflake`
+
+## Pycharm
+
+- Install
+- Open project
+- Setting Preferences
+    - GitHub
+- Set Sources to `til_tfx`
+- Set Excludes to `notebooks` 
+- Set External Tools for Black
+    - https://black.readthedocs.io/en/stable/editor_integration.html
+- Install Plugins
+    - FileWathcer
+    - Toml
+    - Cloud Code
+- Set Black to FileWatcher
+    - https://black.readthedocs.io/en/stable/editor_integration.html
+- Check `Preferences > Editor > General > Ensure line feed at file end on Save`
