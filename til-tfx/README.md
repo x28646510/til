@@ -18,7 +18,7 @@
 - Setting Preferences
     - GitHub
 - Set Sources to `til_tfx`
-- Set Excludes to `notebooks` 
+- Set Excludes to `notebooks` and `.` directories 
 - Set External Tools for Black
     - https://black.readthedocs.io/en/stable/editor_integration.html
 - Install Plugins
