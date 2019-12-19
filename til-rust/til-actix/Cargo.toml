@@ -1,0 +1,27 @@
+[package]
+name = "til-actix"
+version = "0.1.0"
+authors = ["x28646510 <x28646510@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "2.0.0-alpha.6"
+actix-rt = "1.0.0"
+futures = "0.3"
+
+juniper = "0.14"
+
+postgres = "0.17.0-alpha.2"
+r2d2 = "0.8"
+r2d2_postgres = "0.16.0-alpha.2"
+
+log = "0.4"
+env_logger = "0.7"
+dotenv = "0.15"
+serde = "1.0"
+serde_json = "1.0"
+serde_derive = "1.0"
+
+uuid = {"version" = "0.8.1", "fearures" = ["serde", "v4"]}
