@@ -1,7 +1,8 @@
 use juniper;
 
-use crate::schemas::product::Product;
-use crate::schemas::root::Context;
+use super::product::Product;
+use super::root::Context;
+use super::util;
 
 /// User
 #[derive(Default, Debug)]
@@ -34,23 +35,7 @@ impl User {
         let mut conn = context.dbpool.get().unwrap();
         let products = conn
             .query("SELECT * FROM products where user_id=:user_id", &[&self.id])
-            .map(|result| {
-                result
-                    .iter()
-                    .map(|x| {
-                        let id = x.get("id");
-                        let user_id = x.get("user_id");
-                        let name = x.get("name");
-                        let price = x.get("price");
-                        Product {
-                            id,
-                            user_id,
-                            name,
-                            price,
-                        }
-                    })
-                    .collect()
-            })
+            .map(|result| util::create_products_from_rows(result))
             .unwrap();
         products
     }
