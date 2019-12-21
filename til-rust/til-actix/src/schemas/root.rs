@@ -1,6 +1,5 @@
 use juniper;
 use juniper::{FieldError, FieldResult, RootNode};
-use postgres::{Error, Row};
 
 use crate::db::Pool;
 
@@ -8,7 +7,6 @@ use super::product::{Product, ProductInput};
 use super::user::{User, UserInput};
 use super::util;
 use futures::StreamExt;
-use std::error::Error;
 
 pub struct Context {
     pub dbpool: Pool,
@@ -35,10 +33,10 @@ impl QueryRoot {
         let mut conn = context.dbpool.get().unwrap();
         let user = conn.query_one("SELECT * FROM users WHERE id=:id", &[&id]);
         if let Err(err) = user {
-            Err(FieldError::new(
+            return Err(FieldError::new(
                 "User Not Found",
                 graphql_value!({"not_found": "user not found"}),
-            ))
+            ));
         }
 
         Ok(util::create_user_from_row(&user.unwrap()))
@@ -51,6 +49,7 @@ impl QueryRoot {
             .query("SELECT * FROM products", &[])
             .map(|result| util::create_products_from_rows(result))
             .unwrap();
+        Ok(products)
     }
 
     #[graphql(description = "Get single product reference by product ID")]
@@ -58,10 +57,10 @@ impl QueryRoot {
         let mut conn = context.dbpool.get().unwrap();
         let product = conn.query_one("SELECT * FROM products WHERE id=:id", &[&id]);
         if let Err(err) = product {
-            Err(FieldError::new(
+            return Err(FieldError::new(
                 "Product Not Found",
                 graphql_value!({"not_found": "product not found"}),
-            ))
+            ));
         }
 
         Ok(util::create_product_from_row(&product.unwrap()))
@@ -88,7 +87,7 @@ impl MutationRoot {
                 email: user.email,
             }),
             Err(err) => {
-                let msg = err.description();
+                let msg = format!("{}", err);
                 Err(FieldError::new(
                     "Failed to create new user",
                     graphql_value!({ "internal_error": msg }),
@@ -114,7 +113,7 @@ impl MutationRoot {
                 price: product.price,
             }),
             Err(err) => {
-                let msg = err.description();
+                let msg = format!("{}", err);
                 Err(FieldError::new(
                     "Failed to create new product",
                     graphql_value!({ "internal_error": msg }),

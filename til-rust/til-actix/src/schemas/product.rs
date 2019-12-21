@@ -1,10 +1,8 @@
 use juniper;
-use postgres::Row;
 
 use super::root::Context;
 use super::user::User;
 use super::util;
-use postgres::error::Error;
 
 /// Product
 #[derive(Default, Debug)]
@@ -30,10 +28,9 @@ impl Product {
         self.price
     }
 
-    fn user(&self, context: Context) -> Option<User> {
+    fn user(&self, context: &Context) -> Option<User> {
         let mut conn = context.dbpool.get().unwrap();
-        let user =
-            conn.query_one("SELECT * FROM users WHERE id=:id", &[&self.user_id()]);
+        let user = conn.query_one("SELECT * FROM users WHERE id=:id", &[&self.user_id]);
         if let Err(err) = user {
             None
         } else {

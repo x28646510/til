@@ -9,10 +9,6 @@ pub fn create_user_from_row(row: &Row) -> User {
     User { id, name, email }
 }
 
-pub fn create_users_from_rows(rows: Vec<Row>) -> Vec<User> {
-    rows.iter().map(|row| create_user_from_row(row)).collect()
-}
-
 pub fn create_product_from_row(row: &Row) -> Product {
     let id = row.get("id");
     let user_id = row.get("user_id");
@@ -26,8 +22,17 @@ pub fn create_product_from_row(row: &Row) -> Product {
     }
 }
 
+pub fn create_users_from_rows(rows: Vec<Row>) -> Vec<User> {
+    create_entities_from_rows(rows, create_user_from_row)
+}
+
 pub fn create_products_from_rows(rows: Vec<Row>) -> Vec<Product> {
-    rows.iter()
-        .map(|row| create_product_from_row(row))
-        .collect()
+    create_entities_from_rows(rows, create_product_from_row)
+}
+
+fn create_entities_from_rows<F, T>(rows: Vec<Row>, create_fn: F) -> Vec<T>
+where
+    F: Fn(&Row) -> T,
+{
+    rows.iter().map(|row| create_fn(row)).collect()
 }
