@@ -25,3 +25,7 @@ serde_json = "1.0"
 serde_derive = "1.0"
 
 uuid = {"version" = "0.8.1", "features" = ["serde", "v4"]}
+
+[[bin]]
+name = "til-actix"
+path = "src/main.rs"
