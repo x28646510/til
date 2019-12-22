@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql://postgres@localhost:5432"
+    ports:
+      - 8888:8080
+    networks:
+      - til_actix
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - til_actix
+    volumes:
+      - "til_actix:/var/lib/postgresql/data"
+
+networks:
+  til_actix:
+
+volumes:
+  til_actix:
