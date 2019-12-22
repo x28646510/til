@@ -6,7 +6,7 @@ fn main() {
     print!("{}", calc(line.as_str()));
 }
 
-fn calc(input: &str) -> &str {
+fn calc(input: &str) -> &str {w
     return judge(product(input));
 }
 
