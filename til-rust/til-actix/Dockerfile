@@ -12,10 +12,10 @@ COPY Cargo.toml /app/
 WORKDIR /app
 
 RUN rustup target add x86_64-unknown-linux-musl
-RUN cargo build -v --target x86_64-unknown-linux-musl
+RUN cargo build -v --release --target x86_64-unknown-linux-musl
 
 FROM alpine
 
-COPY --from=builder /app/target/x86_64-unknown-linux-musl/debug/til-actix /app/
+COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/til-actix /app/
 
 CMD [ "/app/til-actix" ]

@@ -15,7 +15,6 @@ mod schemas;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
-    dotenv::dotenv().ok();
     std::env::set_var("RUST_LOG", "actix_web=info,info");
     env_logger::init();
     let pool = get_db_pool();
