@@ -1,7 +1,9 @@
+extern crate openssl;
 #[macro_use]
 extern crate juniper;
-extern crate r2d2;
-extern crate r2d2_postgres;
+#[macro_use]
+extern crate diesel;
+
 extern crate serde_json;
 
 use actix_web::{middleware, web, App, HttpServer};
@@ -11,6 +13,7 @@ use crate::handlers::register;
 
 mod db;
 mod handlers;
+mod schema;
 mod schemas;
 
 #[actix_rt::main]
@@ -27,6 +30,6 @@ async fn main() -> std::io::Result<()> {
             .default_service(web::to(|| async { "404" }))
     })
     .bind("0.0.0.0:8080")?
-    .start()
+    .run()
     .await
 }

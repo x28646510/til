@@ -1,11 +1,11 @@
 use juniper;
 
 use super::root::Context;
-use super::user::User;
-use super::util;
+use crate::schema::products;
 
 /// Product
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Queryable, Insertable)]
+#[table_name = "products"]
 pub struct Product {
     pub id: String,
     pub user_id: String,
@@ -26,16 +26,6 @@ impl Product {
     }
     fn price(&self) -> f64 {
         self.price
-    }
-
-    fn user(&self, context: &Context) -> Option<User> {
-        let mut conn = context.dbpool.get().unwrap();
-        let user = conn.query_one("SELECT * FROM users WHERE id=:id", &[&self.user_id]);
-        if let Err(err) = user {
-            None
-        } else {
-            Some(util::create_user_from_row(&user.unwrap()))
-        }
     }
 }
 

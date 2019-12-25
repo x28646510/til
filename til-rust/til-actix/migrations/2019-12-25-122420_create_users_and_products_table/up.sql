@@ -1,3 +1,4 @@
+-- Your SQL goes here
 CREATE TABLE users
 (
     id    varchar(255) NOT NULL,
@@ -12,7 +13,7 @@ CREATE TABLE products
     id      varchar(255)   NOT NULL,
     user_id varchar(255)   NOT NULL,
     name    varchar(255)   NOT NULL,
-    price   decimal(10, 0) NOT NULL,
+    price   numeric NOT NULL,
     CONSTRAINT product_pk PRIMARY KEY (id),
     CONSTRAINT product_fk0 FOREIGN KEY (user_id) REFERENCES users (id)
 );

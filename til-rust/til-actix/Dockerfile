@@ -1,21 +1,28 @@
-FROM rust:1-stretch AS builder
+# -*- mode: dockerfile -*-
+#
+# An example Dockerfile showing how to build a Rust executable using this
+# image, and deploy it with a tiny Alpine Linux container.
 
-RUN curl http://www.musl-libc.org/releases/musl-1.1.24.tar.gz | tar -xvzf - && \
-    cd musl-1.1.24 && \
-    ./configure && make install
+# You can override this `--build-arg BASE_IMAGE=...` to use different
+# version of Rust or OpenSSL.
+ARG BASE_IMAGE=ekidd/rust-musl-builder:latest
 
-ENV PATH=/usr/local/musl/bin/:$PATH
+# Our first FROM statement declares the build environment.
+FROM ${BASE_IMAGE} AS builder
 
-COPY src /app/src
-COPY Cargo.toml /app/
+# Add our source code.
+ADD . ./
 
-WORKDIR /app
+# Fix permissions on source code.
+RUN sudo chown -R rust:rust /home/rust
 
-RUN rustup target add x86_64-unknown-linux-musl
-RUN cargo build -v --release --target x86_64-unknown-linux-musl
+# Build our application.
+RUN cargo build --release
 
-FROM alpine
-
-COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/til-actix /app/
-
-CMD [ "/app/til-actix" ]
+# Now, we need to build our _real_ Docker container, copying in `using-diesel`.
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+COPY --from=builder \
+    /home/rust/src/target/x86_64-unknown-linux-musl/release/til-actix \
+    /usr/local/bin/
+CMD /usr/local/bin/til-actix

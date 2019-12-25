@@ -1,11 +1,11 @@
 use juniper;
 
-use super::product::Product;
 use super::root::Context;
-use super::util;
+use crate::schema::users;
 
 /// User
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Queryable, Insertable)]
+#[table_name = "users"]
 pub struct User {
     pub id: String,
     pub name: String,
@@ -29,14 +29,5 @@ impl User {
     }
     fn email(&self) -> &str {
         &self.email
-    }
-
-    fn products(&self, context: &Context) -> Vec<Product> {
-        let mut conn = context.dbpool.get().unwrap();
-        let products = conn
-            .query("SELECT * FROM products where user_id=:user_id", &[&self.id])
-            .map(|result| util::create_products_from_rows(result))
-            .unwrap();
-        products
     }
 }
