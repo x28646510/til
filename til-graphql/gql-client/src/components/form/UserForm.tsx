@@ -60,7 +60,7 @@ const UserForm = (props: Props) => {
         required
       />
       <Button variant="contained" type="submit">
-        Create
+        {'Create'}
       </Button>
     </form>
   );

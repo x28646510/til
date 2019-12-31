@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import {Typography, Link, Container, Box} from '@material-ui/core';
 import ProTip from './components/ProTip';
-import {AllUsers, CreateUser} from './pages/Users';
+import Users from './pages/user/Users';
+import CreateUser from './pages/user/CreateUser';
 
 const Copyright: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const App: React.FC = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Create React App example with TypeScript
         </Typography>
-        <AllUsers />
+        <Users />
         <CreateUser />
         <ProTip />
         <Copyright />
