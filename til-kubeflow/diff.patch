@@ -1,0 +1,77 @@
+diff --git a/common/ambassador/base/kustomization.yaml b/common/ambassador/base/kustomization.yaml
+index 527b2ba..2a0d429 100644
+--- a/common/ambassador/base/kustomization.yaml
++++ b/common/ambassador/base/kustomization.yaml
+@@ -6,7 +6,7 @@ resources:
+ - deployment.yaml
+ - service-account.yaml
+ - service.yaml
+-namespace: istio-system
++namespace: kubeflow
+ commonLabels:
+   kustomize.component: ambassador
+ images:
+@@ -15,7 +15,8 @@ images:
+   newTag: 0.37.0
+ configMapGenerator:
+ - name: ambassador-parameters
+-  env: params.env
++  envs: 
++    - params.env
+ generatorOptions:
+   disableNameSuffixHash: true
+ patchesJson6902:
+diff --git a/common/centraldashboard/base/kustomization.yaml b/common/centraldashboard/base/kustomization.yaml
+index 44d1604..7f3e40a 100644
+--- a/common/centraldashboard/base/kustomization.yaml
++++ b/common/centraldashboard/base/kustomization.yaml
+@@ -16,7 +16,8 @@ images:
+   newName: gcr.io/kubeflow-images-public/centraldashboard
+   newTag: vmaster-g6b987df8
+ configMapGenerator:
+-- env: params.env
++- envs: 
++    - params.env
+   name: parameters
+ generatorOptions:
+   disableNameSuffixHash: true
+diff --git a/jupyter/jupyter-web-app/base/kustomization.yaml b/jupyter/jupyter-web-app/base/kustomization.yaml
+index 2cfe2f5..1e3ebf2 100644
+--- a/jupyter/jupyter-web-app/base/kustomization.yaml
++++ b/jupyter/jupyter-web-app/base/kustomization.yaml
+@@ -19,7 +19,8 @@ images:
+   newName: gcr.io/kubeflow-images-public/jupyter-web-app
+   newTag: vmaster-ge8c85064
+ configMapGenerator:
+-- env: params.env
++- envs: 
++  - params.env
+   name: parameters
+ generatorOptions:
+   disableNameSuffixHash: true
+diff --git a/jupyter/notebook-controller/base/kustomization.yaml b/jupyter/notebook-controller/base/kustomization.yaml
+index 98d5e29..fabae53 100644
+--- a/jupyter/notebook-controller/base/kustomization.yaml
++++ b/jupyter/notebook-controller/base/kustomization.yaml
+@@ -18,7 +18,8 @@ images:
+   digest: sha256:c40226ca344f9e7325622492de62a86ff2b8ba9cc0e49d36369dd9e613d8ef78
+ configMapGenerator:
+ - name: parameters
+-  env: params.env
++  envs: 
++  - params.env
+ generatorOptions:
+   disableNameSuffixHash: true
+ vars:
+diff --git a/kubeflow-roles/base/kustomization.yaml b/kubeflow-roles/base/kustomization.yaml
+index f71ad0a..260f6a9 100644
+--- a/kubeflow-roles/base/kustomization.yaml
++++ b/kubeflow-roles/base/kustomization.yaml
+@@ -1,4 +1,7 @@
+ apiVersion: kustomize.config.k8s.io/v1beta1
+ kind: Kustomization
++namespace: kubeflow
+ resources:
+ - cluster-roles.yaml
++- cluster-role-binding.yaml
++- service-account.yaml
