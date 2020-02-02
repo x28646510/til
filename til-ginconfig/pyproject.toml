@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "til-ginconfig"
+version = "0.1.0"
+description = ""
+authors = ["x28646510 <x28646510@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+gin-config = "^0.3.0"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^19.10b0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

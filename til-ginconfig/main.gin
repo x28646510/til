@@ -1,0 +1,11 @@
+build.a = 1
+build.b = 2
+build.c = 3
+
+build.inner = @build/inner
+build/inner.d = 4
+build/inner.e = 5
+
+build_other.inner = @build_other/inner
+build_other/inner.d = 1
+build_other/inner.e = 2
