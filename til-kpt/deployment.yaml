@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: til-kpt
+spec:
+  selector:
+    matchLabels:
+      app: til-kpt
+  template:
+    metadata:
+      labels:
+        app: til-kpt
+    spec:
+      containers:
+      - name: til-kpt
+        image: nginx:alpine
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+
